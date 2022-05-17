@@ -10,7 +10,7 @@ import {
     ModalView,
     ModalContainer,
     Colors, 
-} from '../components/styles';
+} from './styles';
 
 const { primary, green, tertiary, red } = Colors;
 const VerificationModal = ({modalVisible, setModalVisible, successful,requestMessage, persistLoginAftetOTPVerification, }) => {

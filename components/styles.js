@@ -6,25 +6,37 @@ const StatusBarHeight = Constants.statusBarHeight;
 
 //colors
 export const Colors = {
-    primary: "#ffffff",
-    secondary: "#E5E7EB",
-    tertiary: "#1F2937",
+   
+    primary: "#081d4d", // כחול כהה
+    secondary: "#4863a3", // כחול טורקיז
+    tertiary: "#81899c", // אפור
+    quaternary: "#181d29",  // שחור
+
     darklight: "#9CA3AF",
-    brand: "#6D28D9",
+    blue: "#0b3054",
     green: "#10B981",
     red: "#EF4444",
     grey: "#6B7280",
+    lightBlue: "#4EADBE",
     lightGreen: 'rgba(16, 185, 129, 0.1)',
 };
 
-const { primary, secondary, tertiary, darklight, brand, green, red } = Colors;
+const { primary, secondary, tertiary, darklight, blue, green, red, grey, lightBlue, lightGreen } = Colors;
 
 export const StyledContainer = styled.View`
     flex: 1;
     padding: 25px;
     padding-top: ${StatusBarHeight +30}px;
     background-color: ${primary};
-`  
+    
+`;
+
+export const Container = styled.View`
+    flex: 1;
+    justify-content: center;
+    background-color: ${primary};
+`;
+
 export const InnerContainer = styled.View`
     flex: 1;
     width: 100%;
@@ -48,7 +60,7 @@ export const Avatar = styled.Image`
     margin: auto;
     border-radius: 50px;
     border-width: 2px;
-    border-color: ${secondary};
+    border-color: ${tertiary};
     margin-bottom 10px;
     margin-top: 10px;
 `;
@@ -62,7 +74,7 @@ export const PageTitle = styled.Text`
     font-size: 30px;
     text-align: center;
     font-weight: bold;
-    color: ${darklight};
+    color: ${tertiary};
     padding: 10px;
 
     ${(props) => props.walcome && `
@@ -97,7 +109,7 @@ export const StyledTextInput = styled.TextInput`
     height: 60px;
     margin-vertical: 3px;
     margin-bottom: 10px;
-    color: ${tertiary};
+    color: ${primary};
 `;
 
 export const StyledInputLabel = styled.Text`
@@ -122,7 +134,7 @@ export const RightIcon = styled.TouchableOpacity`
 
 export const StyledButton = styled.TouchableOpacity`
     padding: 15px;
-    background-color: ${brand};
+    background-color: ${lightBlue};
     justify-content: center;
     align-items: center;
     border-radius: 5px;
@@ -156,7 +168,7 @@ export const MsgBox = styled.Text`
 export const Line = styled.View`
     height: 1px;
     width: 100%;
-    background-color: ${darklight};
+    background-color: ${secondary};
     margin-vertical:10px;
 `;
 
@@ -180,7 +192,7 @@ export const TextLink = styled.TouchableOpacity`
 `;
 
 export const TextLinkContent = styled.Text`
-    color: ${brand};
+    color: ${lightBlue};
     font-size: 15px;
     padding: 10px;
     ${(props) => {
@@ -203,7 +215,7 @@ export const TopHalf = styled.View`
 export const IconBg = styled.View`
     width: 250px;
     height: 250px;
-    background-color: ${Colors.lightGreen};
+    background-color: ${Colors.lightBlue};
     border-radius: 250px;
     justify-content: center;
     align-items: center;
@@ -224,6 +236,7 @@ export const EmphasizeText = styled.Text`
     font-style: italic;
 
 `;
+
 export const InlineGroup = styled.View`
     flex-direction: row;
     padding: 10px;
@@ -274,7 +287,7 @@ export const CodeInputContainer = styled.Pressable`
 `;
 
 export const CodeInput = styled.View`
-    border-color: ${Colors.lightGreen};
+    border-color: ${Colors.lightBlue};
     min-width: 15%;
     border-width: 2px;
     border-radius: 5px;
@@ -285,9 +298,84 @@ export const CodeInputText = styled.Text`
     font-size: 22px;
     font-weight: bold;
     text-align: center;
-    color: ${Colors.brand};
+    color: ${Colors.lightBlue};
 `;
 
 export const CodeInputFocused = styled(CodeInput)`
     border-color: ${Colors.green};
 `;
+
+// Tab navigation
+export const TabArea = styled.View`
+    height: 60px;
+    background-color: ${lightBlue};
+    flex-direction: row;
+`;
+
+export const TabItem = styled.TouchableOpacity`
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+`;
+
+export const TabItemCenter = styled.TouchableOpacity`
+    width: 70px;
+    height: 70px;
+    justify-content: center;
+    align-items: center;
+    background-color: #FFF;
+    border-radius: 35px;
+    border: 3px solid #4EADBE;
+    margin-top: -20px;
+`;
+
+export const CarouselImage = styled.Image`    
+    width: 100%;
+    height: 320px;
+`;
+
+export const SwipeDot = styled.View`
+    width: 10px;
+    height: 10px;
+    background-color: #ffffff;
+    border-radius: 5px;
+    margin: 3px;
+`;
+export const SwipeDotActive = styled.View`
+    width: 10px;
+    height: 10px;
+    background-color: #000000;
+    border-radius: 5px;
+    margin: 3px;
+`;
+export const PageBody = styled.View`
+    background-color: #FFFFFF;
+    border-top-left-radius: 50px;
+    border-top-right-radius: 50px;
+    margin-top:-50px;
+    min-height: 590px;
+`;
+
+// export const ServiceArea = styled.View`
+
+// `;
+
+// export const ServiceTitle = styled.Text`
+
+// `;
+
+// export const ServiceItem = styled.View`
+
+// `;
+
+// export const ServiceInfo = styled.View`
+
+// `;
+
+// export const ServiceName = styled.Text`
+
+// `;
+
+// export const ServicePrice = styled.Text`
+
+// `;

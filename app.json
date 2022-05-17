@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Frontend",
-    "slug": "Frontend",
+    "name": "Make an Appointment",
+    "slug": "Make_an_Appointmenttend",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",

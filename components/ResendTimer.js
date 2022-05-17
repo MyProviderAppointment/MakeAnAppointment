@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, ActivityIndicator } from 'react-native';
 
-import { InfoText, EmphasizeText, InlineGroup, TextLink, TextLinkContent, Colors } from '../components/styles';
+import { InfoText, EmphasizeText, InlineGroup, TextLink, TextLinkContent, Colors } from './styles';
 
 const { brand } = Colors;
 const ResendTimer = ({ activeResend, resendEmail, resendingEmail, resendStatus, timeLeft, targetTime }) => {

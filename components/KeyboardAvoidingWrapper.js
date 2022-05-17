@@ -1,8 +1,8 @@
 import React from "react";
 
-import { KeyboardAvoidingView, ScrollView, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import { StyleSheet, ImageBackground, KeyboardAvoidingView, ScrollView, TouchableWithoutFeedback, Keyboard } from 'react-native';
 
-import {Colors} from './../components/styles';
+import {Colors} from './styles';
 const {primary} = Colors;
 const KeyboardAvoidingWrapper = ({children}) => {
     return (
@@ -12,9 +12,16 @@ const KeyboardAvoidingWrapper = ({children}) => {
                     {children}
                 </TouchableWithoutFeedback>
             </ScrollView>
-
         </KeyboardAvoidingView>
     );
 }
-
+const styles = StyleSheet.create({
+    // container: {
+    //   flex: 1,
+    // },
+    image: {
+      flex: 1,
+      justifyContent: "center"
+    }
+});
 export default KeyboardAvoidingWrapper;
