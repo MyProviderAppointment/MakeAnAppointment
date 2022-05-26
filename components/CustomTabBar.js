@@ -28,6 +28,9 @@ const CustomTabBar = ({ state, navigation }) => {
             <TabItem onPress={()=>goTo('Setting')}>
                 <Image style={{opacity: state.index===4? 1 : 0.3}} source={require('../assets/Icons/setting.png')}/>
             </TabItem>
+            <TabItem onPress={()=>goTo('Cal')}>
+                <Image style={{opacity: state.index===5? 1 : 0.3}} source={require('../assets/Icons/calendar.png')}/>
+            </TabItem>
         </TabArea>
     );
 }

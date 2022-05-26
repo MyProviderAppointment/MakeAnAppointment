@@ -9,6 +9,7 @@ import Account from '../screens/Customer/Account';
 import Search from '../screens/Customer/Search';
 import Weekly from '../screens/Customer/Weekly';
 import Setting from '../screens/Customer/Setting';
+import Cal from '../screens/Provider/Cal';
 
 import CustomTabBar from '../components/CustomTabBar';
 import { CredentialsContext } from '../components/CredentialsContext';
@@ -36,6 +37,7 @@ const RootTab = () => {
                 <Tab.Screen name="Search" component={Search}/>
                 <Tab.Screen name="Weekly" component={Weekly}/>
                 <Tab.Screen name="Setting" component={Setting}/>
+                <Tab.Screen name="Cal" component={Cal}/>
             </Tab.Navigator>
     );
 

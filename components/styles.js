@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import {View, Text, Image, TextInput, TouchableOpacity} from 'react-native';
+import {View, Text, Image, TextInput, TouchableOpacity, ScrollView} from 'react-native';
 import Constants from 'expo-constants';
 
 const StatusBarHeight = Constants.statusBarHeight;
@@ -21,7 +21,7 @@ export const Colors = {
     lightGreen: 'rgba(16, 185, 129, 0.1)',
 };
 
-const { primary, secondary, tertiary, darklight, blue, green, red, grey, lightBlue, lightGreen } = Colors;
+const { primary, secondary, tertiary, quaternary, darklight, blue, green, red, grey, lightBlue, lightGreen } = Colors;
 
 export const StyledContainer = styled.View`
     flex: 1;
@@ -329,6 +329,7 @@ export const TabItemCenter = styled.TouchableOpacity`
     margin-top: -20px;
 `;
 
+// Carousel Images
 export const CarouselImage = styled.Image`    
     width: 100%;
     height: 320px;
@@ -341,6 +342,7 @@ export const SwipeDot = styled.View`
     border-radius: 5px;
     margin: 3px;
 `;
+
 export const SwipeDotActive = styled.View`
     width: 10px;
     height: 10px;
@@ -348,6 +350,7 @@ export const SwipeDotActive = styled.View`
     border-radius: 5px;
     margin: 3px;
 `;
+
 export const PageBody = styled.View`
     background-color: #FFFFFF;
     border-top-left-radius: 50px;
@@ -355,6 +358,131 @@ export const PageBody = styled.View`
     margin-top:-50px;
     min-height: 590px;
 `;
+
+// Appointments
+export const ModalItem = styled.View`
+    borderWidth: 5px;
+    border-style: solid;
+    border-color: #ffffff;
+    background-color: ${primary};
+    border-radius: 10px;
+    margin-bottom: 15px;
+    padding: 10px;
+`;
+
+export const DateInfo = styled.View`
+    flex-direction: row;
+`;
+
+export const DatePrevArea = styled.TouchableOpacity`
+    flex: 1;
+    justify-content: flex-end;
+    align-items: flex-end;
+`;
+
+export const DateNextArea = styled.TouchableOpacity`
+    flex: 1;
+    align-items: flex-start;
+
+`;
+
+export const DateTitleArea = styled.View`
+    width: 140px;
+    justify-content: center;
+    align-items: center;
+
+`;
+
+export const DateTitle = styled.Text`
+    font-size: 17px;
+    font-weight: bold;
+    color: #ffffff;
+`;
+
+export const DateList = styled.ScrollView``;
+
+export const DateItem = styled.TouchableOpacity`
+    width: 50px;
+    justify-content: center;
+    border-radius: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    align-items: center;
+`;
+
+export const DateItemWeekDay = styled.Text`
+    font-size: 16px;
+    font-weight: bold;
+    color: #ffffff;
+`;
+
+export const DateItemNumber = styled.Text`
+    font-size: 16px;
+    font-weight: bold;
+    color: #ffffff;
+
+`;
+
+export const TimeList = styled.ScrollView``;
+
+export const TimeItem = styled.TouchableOpacity`
+    width: 75px;
+    height: 40px;
+    justify-content: center;
+    border-radius: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    align-items: center;
+`;
+
+export const TimeItemText = styled.Text`
+    font-size: 16px;
+    font-weight: bold;
+    color: #ffffff;
+`;
+
+export const AppointmentsList = styled.ScrollView`
+    height: 500px;
+`;
+
+export const AppointmentsItem = styled.TouchableOpacity`
+    justify-content: center;
+    border-radius: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    align-items: center;
+`;
+
+export const AppointmentsWeekDay = styled.Text`
+    font-size: 24px;
+    font-weight: bold;
+    color: #ffffff;
+`;
+
+export const AppointmentsTime = styled.Text`
+    font-size: 24px;
+    font-weight: bold;
+    color: #ffffff;
+
+`;
+
+export const DateAppointments = styled.ScrollView``;
+
+export const DateAppointmentsItem = styled.TouchableOpacity`
+    height: 50px;
+    justify-content: center;
+    border-radius: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    align-items: center;
+`;
+export const DateAppointmentsDetails = styled.Text`
+    font-size: 16px;
+    font-weight: bold;
+    color: #ffffff;
+`;
+
+
 
 // export const ServiceArea = styled.View`
 

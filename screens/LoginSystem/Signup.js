@@ -75,9 +75,8 @@ const Signup = ({navigation}) => {
                 if (status !== 'PENDING') {
                     handleMessage(message, status);
                 } else {
-                    tempUserPersist(({ email, name } = credentials)) // dateOfBirth
+                    tempUserPersist(({ email, name } = credentials));
                     navigation.navigate('Verification', { ...data }); 
-                    // perisistLogin({...data}, message, status);
                 }
                 setSubmitting(false);
             })
@@ -106,29 +105,17 @@ const Signup = ({navigation}) => {
                 <InnerContainer>
                     <PageTitle>My App</PageTitle>
                     <SubTitle>Account Signup</SubTitle>       
-                    {/* {show && (
-                    <DateTimePicker 
-                        testID="dateTimePicker"
-                        value={date}
-                        mode='date'
-                        is24Hour={true}
-                        display="default"
-                        onChange={onChange}
-                    /> 
-                )} */}
                     <Formik
-                        initialValues={{name: '', email: '', password: '', confirmPassword: ''}} // ,dateOfBirth: ''
+                        initialValues={{name: '', email: '', phone: '', password: '', confirmPassword: ''}} // ,dateOfBirth: ''
                         onSubmit={(values, {setSubmitting}) => {
                             values = {...values }; // ,dateOfBirth: dob
-                            if (values.email == '' || values.password == '' || values.confirmPassword == '' || values.name == '' ) { // || values.dateOfBirth == '') {
+                            if (values.email == '' || values.password == '' || values.confirmPassword == '' || values.name == '' || values.phone == '' ) { // || values.dateOfBirth == '') {
                                 handleMessage('An empty field was detected');
                                 setSubmitting(false);
                             } else if (values.password !== values.confirmPassword) {
                                 handleMessage('Password do not match');
                                 setSubmitting(false);
-                            } else {
-                                handleSignup(values, setSubmitting);
-                            }
+                            } else { handleSignup(values, setSubmitting); }
                         }}
                     >
                         {({handleChange, handleBlur, handleSubmit, values, isSubmitting}) => (
@@ -152,18 +139,15 @@ const Signup = ({navigation}) => {
                                 value={values.email}
                                 keyboardType="email-address"
                             />
-                            {/* <MyTextInput 
-                                label="Date of Birth"
-                                icon="calendar"
-                                placeholder="YYYY - MM - DD"
+                             <MyTextInput 
+                                label="Phone Number"
+                                // icon="north-star"
+                                placeholder="050-1234567"
                                 placeholderTextColor={darklight}
-                                onChangeText={handleChange('dateOfBirth')}
-                                onBlur={handleBlur('dateOfBirth')}
-                                value={dob ? dob.toDateString() : ''}
-                                isDate={true}
-                                editable={false}
-                                showDatePicker={showDatePicker}
-                            /> */}
+                                onChangeText={handleChange('phone')}
+                                onBlur={handleBlur('phone')}
+                                value={values.phone}
+                            />
                             <MyTextInput 
                                 label="Password"
                                 icon="lock"
@@ -196,13 +180,11 @@ const Signup = ({navigation}) => {
                                     <ButtonText>Signup</ButtonText>
                                 </StyledButton>
                             )}
-
                             {isSubmitting && (
                                 <StyledButton disabled={true}>
                                     <ActivityIndicator size="large" color={primary}/>
                                 </StyledButton>
                             )}
-
                             <Line />
                             <ExtraView> 
                                 <ExtraText>Already have an account? </ExtraText>
@@ -226,13 +208,7 @@ const MyTextInput = ({label, icon, isPassword, hidePassword, setHidePassword, ..
                 <Octicons name={icon} size={30} color={brand}/>
             </LeftIcon>
             <StyledInputLabel>{label}</StyledInputLabel>
-            {/* {!isDate &&  */}
             <StyledTextInput {...props} /> 
-            {/*} {isDate && (
-                <TouchableOpacity onPress={showDatePicker}>
-                    <StyledTextInput {...props} />
-                </TouchableOpacity>
-            )} */}
             {isPassword && (
                 <RightIcon onPress={() => setHidePassword(!hidePassword)}>
                     <Ionicons name={hidePassword ? 'md-eye-off' : 'md-eye'} size={30} color={darklight}/>
