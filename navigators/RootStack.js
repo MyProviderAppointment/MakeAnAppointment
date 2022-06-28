@@ -5,7 +5,9 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 // screens
+import Roots from './Roots';
 import RootTab from './RootTab';
+import RootProviderTab from './RootProviderTab';
 import Login from './../screens/LoginSystem/Login';
 import Signup from './../screens/LoginSystem/Signup';
 import Verification from './../screens/LoginSystem/OtpVerification';
@@ -36,12 +38,16 @@ const RootStack = () => {
                     >
                     {storedCredentials ? (
                         <Stack.Screen options={{ headerTintColor: primary}} name="RootTab" component={RootTab}/>
+                        // <Stack.Screen options={{ headerTintColor: primary}} name="RootProviderTab" component={RootProviderTab}/>
+                        // <Stack.Screen options={{ headerTintColor: primary}} name="Roots" component={Roots}/>
                     ) : (
                         <>
                             <Stack.Screen name="Login" component={Login}/>
                             <Stack.Screen name="Signup" component={Signup}/>   
                             <Stack.Screen name="Verification" component={Verification}/>
+                            <Stack.Screen name="Roots" component={Roots}/>
                             <Stack.Screen name="RootTab" component={RootTab}/>
+                            <Stack.Screen name="RootProviderTab" component={RootProviderTab}/>
                         </>
                     )}        
                     </Stack.Navigator>

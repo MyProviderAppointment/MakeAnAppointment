@@ -1,5 +1,5 @@
 import React, { Component, useState, useEffect } from 'react';
-import { Platform, StyleSheet, Text, View, ActivityIndicator, Image } from 'react-native';
+import { Platform, StyleSheet, Text,StatusBar , View, ActivityIndicator, Image, Alert, Modal, SafeAreaView } from 'react-native';
 import { VCalendar } from './../../components/VCalendar';
 import { DateInfo,
     DatePrevArea,
@@ -7,12 +7,25 @@ import { DateInfo,
     DateTitle,
     DateNextArea,
     DateList,
-    ModalItem
+    ModalItem,
+    StyledButton,
+    ButtonText,
+    LeftIcon,
+    RightIcon,
+    ModalView,
+    PageTitle,
+    InfoText
 } from '../../components/styles';
 import { baseAPIUrl } from '../../components/shared';
 import axios from 'axios';
 import moment from 'moment';
-import { Title } from 'react-native-paper';
+import { Octicons, Ionicons, Fontisto } from '@expo/vector-icons';
+import Popup from '../../components/Popup';
+import CreateWorkDay from './CreateWorkDay';
+import Actions from './Actions';
+import { Dialog } from 'react-native-paper';
+
+// import DatePicker from 'react-native-date-picker';
 
 const months = [
     'ינואר',
@@ -44,7 +57,7 @@ const monthsName = [
     "April",
     "May",
     "June",
-    "Jule",
+    "July",
     "August",
     "September",
     "October",
@@ -52,51 +65,88 @@ const monthsName = [
     "December"
 ];
 
-const Cal = () => {
+const Cal = ({navigation}) => {
+    const [reload, setReload] = useState(false);
     const [listHours, setListHours] =useState([]);
-	const [selectedYear, setSelectedYear] = useState(0);
-    const [selectedMonth, setSelectedMonth] = useState(0);
-    const [selectedDay, setSelectedDay] = useState(0);
-    // const [data,setData] = useState([]);
-    const [isSubmitting,setSubmitting] = useState(true);
     const [listDays, setListDays] = useState([]);
     const [tempListDays, setTempListDays] = useState([]);
-      const [wrongCredentials,setWrongCredentials] = useState(true);
+
+    const [selectedYear, setSelectedYear] = useState(0);
+    const [selectedMonth, setSelectedMonth] = useState(0);
+    const [selectedDay, setSelectedDay] = useState(0);
+    const [isSubmitting,setSubmitting] = useState(true);
+    // const [wrongCredentials,setWrongCredentials] = useState(true);
+    // const [openPopup,setOpenPopup] = useState(false);
+    const [visible, setVisible] = useState(false);
+    const [visibleN, setVisibleN] = useState(false);
+    const [visibleE, setVisibleE] = useState(false);
+    const [date, setDate] = useState('');
+    const [start, setStart] = useState('');
+    const [end, setEnd] = useState('');
+    const [cancel, setCancel] = useState(false);
+    const [exist, setExist] = useState(false);
+    const [check, setCheck] = useState(false);
+    const [existData, setExistData] = useState([]);
     // const state = data;
 
-    useEffect(async () => {
-        // if (selectedDay == 0 || selectedYear == 0 ) {
-            let _today = new Date();
-            console.log(_today);
-            
-            setSelectedYear( _today.getFullYear());
-            setSelectedMonth( _today.getMonth());
-            setSelectedDay( _today.getDate());
-            console.log('day: ', selectedDay);
-            console.log('month: ', selectedMonth);
-            console.log('year: ', selectedYear);
-            
-            
+    useEffect(() => {
+        let _today = new Date();
+        console.log(_today);
+        setAll(_today);
+        // console.log('day: ', selectedDay);
+        // console.log('month: ', selectedMonth);
+        // console.log('year: ', selectedYear);   
     }, []);
-    
+    const setAll = (today) => {
+        setVisible(false);
+        setVisibleN(false);
+        setVisibleE(false);
+        setReload(false);
+        setCancel(false);
+        setExist(false);
+        setSelectedYear( today.getFullYear());
+        setSelectedMonth( today.getMonth());
+        setSelectedDay( today.getDate());
+    }
     useEffect( async () => {
-    
-        setHeaders(getHeaders());
+        // setSubmitting(true);
         const mo = monthsName[selectedMonth];
         const value = {"slot_time": mo};
+        // getCalendar(value);
         await getCalendar(value);
+        // setTimeout(() => { 
+        // if(check){
+        //     setHeaders(getHeaders());
+        //     setReload(false);
+        //     setSubmitting(false);
+        //     setCheck(false);
+
+        // } else {
+        //     getCalendar(value);
+        // }
+        //     setHeaders(getHeaders());
+        //     setReload(false);
+        //     setSubmitting(false);
+        //     setCheck(false);
+
+        // }, 3000);
+
+    }, [isSubmitting, selectedMonth, reload]);   
+     useEffect(() => {
         setTimeout(() => { 
+        console.log(`check - ${check}`);  
+
+        if(check){
+            setHeaders(getHeaders());
+            setReload(false);
             setSubmitting(false);
-            console.log(headers);
+            setCheck(false);
+        }
         }, 3000);
+        
+    }, [check]);
 
-
-    }, [isSubmitting, selectedMonth, selectedYear]);
-
-    const getCalendar = async (credentials) => {  
-		// let newList = listDays;
-
-		// const newList = () => {getHeaders();};
+    const getCalendar = async (credentials) => {
         let newList = [];
 		let tempNewList = [];
         let newListDays = [];
@@ -113,32 +163,28 @@ const Cal = () => {
                         let date = new Date(arr[index].slot_date);
                         let selDate = handleDayView(date);
                         tempNewList = [];
-						for (let i = 1; i < array.length; i++) {
-                            // let e = array[i].slot_start.split(':');
-                            // const slot_end = ` ${e[0]}:00:00`
+						for (let i = 0; i < array.length; i++) {
                             tempNewList.push({
-                                start: `${selDate} ${array[i-1].slot_start}:00`,
-                                end: `${selDate} ${array[i].slot_start}:00`,
+                                start: `${selDate} ${array[i].slot_start}:00`,
+                                end: `${selDate} ${array[i].slot_end}:00`,
                                 title:  array[i].available ? 'Free' : `${array[i].name} שם:`,
-                                summary: array[i].available ? 'Free' : `${array[i].phone} טל':`,
+                                summary: array[i].available ? 'Free' : `${array[i].phone} מס':`,
                                 color: array[i].available ? 'green' : '#2cc7ad',
                             });
-                        
                         } 
-                        console.log(`${date.getDate()} ${days[date.getDay()]}`);  
+                        // console.log(`${date.getDate()} ${days[date.getDay()]}`);  
                         newList.push({
                             Title: `${date.getDate()} ${days[date.getDay()]}`,
-                            events: tempNewList,
+                            events: tempNewList
                         });
                         newListDays.push(selDate);
                     }
-                    // console.log(newList);
-                    // console.log(newListDays);
-
 				}
                 setListDays(newListDays);
                 setListHours(newList);
+                setCheck(true);
 
+                // console.log('yyyyyyyyyyyyyyyyyyyyy        hhhhhhhhhhhhhh      ',listHours);
 			})
 			.catch((error)=> {
 				console.log("problem in fetching data: ", error);
@@ -178,101 +224,98 @@ const Cal = () => {
         let selDate = `${year}-${month}-${day}`;
         return selDate;
     }
-    
 	const getHeaders = () => {
-        
-        let newListDays = []; 
-
-        // setTimeout((newListDays) => { 
-            let daysInMonth = new Date(selectedYear, selectedMonth+1, 0).getDate();
-        // let list =  getCalendar(value);
-        // console.log(" ----------------------------------------------------------------------------------- ");
-        // const mo = monthsName[selectedMonth];
-        // const value = {"slot_time": mo};
-        // await getCalendar(value);  
-            console.log('listDays    -------------------------------------------------------- ' ,listDays);
-            // console.log('listDays length   ' ,listDays.length);
-            // console.log('listHours -------------------------------------------------------- ', listHours);
-            for (let i = 1; i <= daysInMonth; i++) {
-                let date = new Date(selectedYear, selectedMonth, i);
-                let selDate = handleDayView(date);
-                // console.log(listDays.includes(selDate));
-                if(listDays.includes(selDate)){
-                    console.log(selDate);
+        let newListDays = [];      
+        let daysInMonth = new Date(selectedYear, selectedMonth+1, 0).getDate(); 
+        // console.log('listDays    -------------------------------------------------------- ' ,listDays);
+        for (let i = 1; i <= daysInMonth; i++) {
+            let date = new Date(selectedYear, selectedMonth, i);
+            let selDate = handleDayView(date);
+            let title =  `${i} ${days[date.getDay()]}`;
+            if(listDays.includes(selDate)){
+                // console.log(selDate);
+                // console.log(listHours[listDays.indexOf(selDate)].events);
+                let index = listDays.indexOf(selDate);
+                // console.log(index);
+                // if(listHours[index].events) {
                     newListDays.push({
-                        // key: selDate,
-                        Title: `${i} ${days[date.getDay()]}`,
-                        
-                        events: listHours[listDays.indexOf(selDate)].events,
-                        // events: [
-                        //     {
-                        //         start: '2020-09-07 08:00:00',
-                        //         end: '2020-09-07 08:45:00',
-                        //         title: 'Dr. Mariana Lisa',
-                        //         summary: '3412 Piedmont Rd NE, GA 3032',
-                        //         color: 'green',
-                        //     },
-                        //     {
-                        //         start: '2020-09-07 08:30:00',
-                        //         end: '2020-09-07 10:30:00',
-                        //         title: 'Dr. Mariana Joseph',
-                        //         summary: '3412 Piedmont Rd NE, GA 3032',
-                        //     },
-                        // ]
+                        Title: title,
+                        events: listHours[index].events,      
                     });
-                //     counter-=1;
-                } else if (date >= new Date()) {
-                    newListDays.push({
-                        // key: selDate,
-                        Title: `${i} ${days[date.getDay()]}`,
-                    }); 
-                } 
-                // } else if (new Date()) {
-                //     newListDays.push({
-                //         Title: `${i} ${days[date.getDay()]}`,
-                //         // color: 'grey'
-                //     });
                 // }
-                
-            } 
-            newListDays.push({
-                // key: selDate,
-                Title: '',
-            })
-        // }, 5000);
-        // if ( listDays.length > 0 ) {
-            // console.log("newListDays:                       ", newListDays);
-            // setSubmitting(false);
-            return newListDays;
-        // }
-        // return [];
-        
+            } else if (date.getDate() == new Date().getDate()) {
+                newListDays.push({
+                    Title: title,
+                }); 
+            } else if (date >= new Date()) {
+                newListDays.push({
+                    Title: title,
+                }); 
+            }     
+        } 
+        newListDays.push({
+            Title: '',
+        })
+        return newListDays;   
     }
     const onNewEvent = (item) => {
         console.log(item)
         const { index, Title, hours } = item
         if (Title != '') {
-            const msg = `index=${index}, Title=${Title}, hours=${hours.from}-${hours.to}`
-            alert(msg)
+            // const msg = `index=${hours}, Title=${listDays[index]}, hours=${hours.from}-${hours.to}`
+            // console.log(item)
+            const i = item.Title.split(' ')
+            // const item_date = listDays[index]
+            let date = new Date(selectedYear, selectedMonth,i[0])
+            const item_date = handleDayView(date)
+            const item_start = hours.from
+            const item_end = hours.to
+            setDate(item_date)
+            // console.log(item_date)
+            setExist(false)
+
+            setStart(item_start)
+            setEnd(item_end)
+            setCancel(false)
+            setVisibleE(true)
+            // alert(msg)
         } else {
             alert('wrong')
         }
     }
     const onClickEvent = (item) => {
         console.log(item)
-        const msg = `${item.title}\n${item.summary}\n\n${item.start} - ${item.end}`
-        alert(msg)
-    }
-    const [ headers, setHeaders ] =useState([]);
-
-  
-    return (
-        <View style={styles.container}>
-            <Text style={styles.welcome}>☆Calendar☆</Text>
+        // console.log(item.title)
+        const i = item.start.split(' ')
+        const name = item.title.split(' ')
+        const phone = item.summary.split(' ')
+        const item_date = i[0]
+        const item_start = i[1]
+        setDate(item_date)
+        setStart(item_start) 
+        if(item.summary != 'Free') {
+            setExist(true)
+            setExistData([name[0],name[1],name[2], phone[0], phone[1]])
+        } else {
+            setExist(false)
+        }
+        setCancel(true)
+        setVisibleE(true)
         
+        // Alert.alert(date, start)
+    }
+   
+    const [ headers, setHeaders ] =useState([]);
+    const [value, onChange] = useState([new Date(), new Date()]);
+    
+    return ( <>
+        <View style={styles.container}>
+        {/* <SafeAreaView> */}
+            {/* <Text style={styles.welcome}>☆Calendar☆</Text> */}
+            <Text style={styles.welcome}>Calendar</Text>
 			<DateInfo>
 				{(new Date(selectedYear, selectedMonth-1, 31) > Date.now()) && (
-				<DatePrevArea onPress={handleLeftDateClick}>
+                    <DatePrevArea onPress={handleLeftDateClick}>
 					<Image style={{ width: 35, height: 35}} source={require('../../assets/Icons/prev-black.png')}/>
 				</DatePrevArea>
 				)}
@@ -289,8 +332,11 @@ const Cal = () => {
 				<Image style={{ width: 35, height: 35}} source={require('../../assets/Icons/next-black.png')}/>
 				</DateNextArea>
 			</DateInfo>	
-            {/* <Text style={styles.instructions}>{`${months[selectedMonth]}  ${selectedYear}`}</Text> */}
-            <Text style={styles.welcome}>☆☆☆</Text>
+                    {/* </SafeAreaView> */}
+            <RightIcon onPress = {() => setVisible(true)}>
+                <Octicons name={"plus"} size={30} color={"#000000"}/>
+            </RightIcon>
+            {/* <Text style={styles.welcome}>☆☆☆</Text> */}
             {(!isSubmitting && (
                 <VCalendar
                     onNewEvent={onNewEvent}
@@ -301,7 +347,7 @@ const Cal = () => {
                     columnHeaders={getHeaders()}
                     title= ""
                     hourStart={8}
-                    hourEnd={17}
+                    hourEnd={20}
                     showHourStart={8}
                 />
          
@@ -309,12 +355,35 @@ const Cal = () => {
             {(isSubmitting && (
                 <ActivityIndicator size="large" color='#4EADBE'/>
             ))} 
-           
+            <CreateWorkDay
+                visible={visible}
+                setVisible={setVisible}
+                setSubmitting={setSubmitting}
+                setReload={setReload}
+            />
+            <Actions
+                navigation={navigation}
+                visible={visibleE}
+                setVisible={setVisibleE}
+                setReload={setReload}
+                setSubmitting={setSubmitting}
+                slot_date={date}
+                slot_start={start}
+                slot_end={end}
+                cancel={cancel}
+                setCancel={setCancel}
+                exist={exist}
+                setExist={setExist}
+                existData={existData}
+            />
+
         </View>
-    );
+    </> );
 
   
 }
+
+
 
 const styles = StyleSheet.create({
     container: {

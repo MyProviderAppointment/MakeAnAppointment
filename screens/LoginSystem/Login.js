@@ -2,7 +2,7 @@ import React, {useState, useContext, useEffect} from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { Formik } from 'formik';
 import { Octicons, Ionicons, Fontisto } from '@expo/vector-icons';
-import { View, ActivityIndicator, Platform,StyleSheet, ImageBackground} from 'react-native';
+import { View, ActivityIndicator, Platform,StyleSheet, ImageBackground, Dimensions} from 'react-native';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -26,7 +26,8 @@ import {
     ExtraView,
     TextLink,
     TextLinkContent,
-    Container
+    Container,
+    PageBody
 } from '../../components/styles';
 
 import { baseAPIUrl } from '../../components/shared';
@@ -152,12 +153,37 @@ const Login = ({navigation, route}) => {
 
     return (
         <KeyboardAvoidingWrapper>
-            <StyledContainer> 
-                    <StatusBar style="dark" />
-                    <InnerContainer>
-                        <PageLogo resizeMode="center" source={require('../../assets/img/barbershop.png')} />
+            <Container> 
+                    <StatusBar style="light" />
+                    <ImageBackground
+                        source={require('./../../assets/img/bgc.jpg')}
+                        style={{
+                            opacity: 0.5,
+                            alignItems: 'center',
+                            paddingTop: 80,
+                            height: Dimensions.get('window').height / 3,
+                        }}
+                        resizeMode="cover"
+                        
+                        >
                         <PageTitle>Make An Appiontment</PageTitle>
                         <SubTitle>Account Login</SubTitle>
+                    </ImageBackground>
+                    <InnerContainer
+                        style={{
+                            borderTopStartRadius: 60,
+                            borderTopEndRadius: 60,
+                            bottom: 50,
+                            flex: 1.5,
+                            paddingTop: 40,
+
+                            backgroundColor: 'white',
+                        }}
+                    >
+                       
+                       
+                        {/* <PageLogo resizeMode="center" source={require('../../assets/img/barbershop.png')} /> */}
+                        
                         <Formik
                             initialValues={{email: route?.params?.email, password: ''}}
                             enableReinitialize={true}
@@ -236,8 +262,9 @@ const Login = ({navigation, route}) => {
                             </StyledFormArea>
                             )}
                         </Formik>
+
                     </InnerContainer>
-             </StyledContainer>
+             </Container>
         </KeyboardAvoidingWrapper>     
     );
 }

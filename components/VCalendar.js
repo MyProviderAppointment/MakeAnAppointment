@@ -96,8 +96,6 @@ export class VCalendar extends React.Component {
         return ret;
     };
 
-
-
     scrollToFirst() {
         const { month, showHourStart } = this.state
         const date = new Date();
@@ -121,8 +119,7 @@ export class VCalendar extends React.Component {
             }
         },1);
     }
-        
-
+   
     getPackedEvents(items, hourStart) {
         const width = SCREEN_WIDTH / 4 - 20;
         const userEvents = []
@@ -248,6 +245,7 @@ export class VCalendar extends React.Component {
             () => this.scrollToFirst())
 
     }
+    
     render() {
         const { modalVisible } = this.state
         return (

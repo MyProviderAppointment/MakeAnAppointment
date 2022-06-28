@@ -7,11 +7,18 @@ const StatusBarHeight = Constants.statusBarHeight;
 //colors
 export const Colors = {
    
-    primary: "#081d4d", // כחול כהה
-    secondary: "#4863a3", // כחול טורקיז
-    tertiary: "#81899c", // אפור
-    quaternary: "#181d29",  // שחור
-
+    primary: "#60615e", // שמנת
+    secondary: "#f1f2eb", // לבן
+    tertiary: "#181d29", // שחור
+    quaternary: "#dff07a",  // צהוב בהיר
+    background: "#ffffff",
+    buttontext: "#000000",
+    text: "#000000",
+    space: "#666875",
+    title: "#000000",
+    holder: "#9698a3",
+    button: "#666b85",
+    icon: "#666b85",
     darklight: "#9CA3AF",
     blue: "#0b3054",
     green: "#10B981",
@@ -21,20 +28,20 @@ export const Colors = {
     lightGreen: 'rgba(16, 185, 129, 0.1)',
 };
 
-const { primary, secondary, tertiary, quaternary, darklight, blue, green, red, grey, lightBlue, lightGreen } = Colors;
+const { background, buttontext, text, space, title, holder, button, icon, primary, secondary, tertiary, quaternary, darklight, blue, green, red, grey, lightBlue, lightGreen } = Colors;
 
 export const StyledContainer = styled.View`
     flex: 1;
     padding: 25px;
     padding-top: ${StatusBarHeight +30}px;
-    background-color: ${primary};
+    background-color: ${background};
     
 `;
 
 export const Container = styled.View`
     flex: 1;
     justify-content: center;
-    background-color: ${primary};
+    background-color: ${background};
 `;
 
 export const InnerContainer = styled.View`
@@ -60,12 +67,12 @@ export const Avatar = styled.Image`
     margin: auto;
     border-radius: 50px;
     border-width: 2px;
-    border-color: ${tertiary};
+    border-color: ${icon};
     margin-bottom 10px;
     margin-top: 10px;
 `;
 
-export const WelcomeImage = styled.Image`
+export const WelcomeImage = styled.ImageBackground`
     height: 50%;
     min-width: 100%;
 `;
@@ -74,7 +81,7 @@ export const PageTitle = styled.Text`
     font-size: 30px;
     text-align: center;
     font-weight: bold;
-    color: ${tertiary};
+    color: ${title};
     padding: 10px;
 
     ${(props) => props.walcome && `
@@ -87,7 +94,7 @@ export const SubTitle = styled.Text`
     margin-bottom: 20px;
     letter-spacing: 1px;
     font-weight: bold;
-    color: ${tertiary};
+    color: ${title};
 
     ${(props) => props.walcome && `
         margin-bottom: 5px;
@@ -100,7 +107,7 @@ export const StyledFormArea = styled.View`
 `;
 
 export const StyledTextInput = styled.TextInput`
-    background-color: ${secondary};
+    background-color: ${space};
     padding: 15px;
     padding-left: 55px;
     padding-right: 55px;
@@ -109,11 +116,11 @@ export const StyledTextInput = styled.TextInput`
     height: 60px;
     margin-vertical: 3px;
     margin-bottom: 10px;
-    color: ${primary};
+    color: ${text};
 `;
 
 export const StyledInputLabel = styled.Text`
-    color: ${tertiary};
+    color: ${text};
     font-size: 13px; 
     text-align: left;
 `;
@@ -131,10 +138,9 @@ export const RightIcon = styled.TouchableOpacity`
     position: absolute;
     z-index: 1;
 `;
-
 export const StyledButton = styled.TouchableOpacity`
     padding: 15px;
-    background-color: ${lightBlue};
+    background-color: ${button};
     justify-content: center;
     align-items: center;
     border-radius: 5px;
@@ -149,7 +155,7 @@ export const StyledButton = styled.TouchableOpacity`
 `;
 
 export const ButtonText = styled.Text`
-    color: ${primary};
+    color: ${buttontext};
     font-size: 16px;
     
     ${(props) => props.google == true &&`
@@ -168,7 +174,7 @@ export const MsgBox = styled.Text`
 export const Line = styled.View`
     height: 1px;
     width: 100%;
-    background-color: ${secondary};
+    background-color: ${space};
     margin-vertical:10px;
 `;
 
@@ -182,7 +188,7 @@ export const ExtraView = styled.View`
 export const ExtraText = styled.Text`
     justify-content: center;
     align-content: center;
-    color: ${tertiary};
+    color: ${text};
     font-size: 15px;
 `;
 
@@ -192,7 +198,7 @@ export const TextLink = styled.TouchableOpacity`
 `;
 
 export const TextLinkContent = styled.Text`
-    color: ${lightBlue};
+    color: ${icon};
     font-size: 15px;
     padding: 10px;
     ${(props) => {
@@ -215,7 +221,7 @@ export const TopHalf = styled.View`
 export const IconBg = styled.View`
     width: 250px;
     height: 250px;
-    background-color: ${Colors.lightBlue};
+    background-color: ${button};
     border-radius: 250px;
     justify-content: center;
     align-items: center;
@@ -308,7 +314,7 @@ export const CodeInputFocused = styled(CodeInput)`
 // Tab navigation
 export const TabArea = styled.View`
     height: 60px;
-    background-color: ${lightBlue};
+    background-color: ${button};
     flex-direction: row;
 `;
 
@@ -333,8 +339,11 @@ export const TabItemCenter = styled.TouchableOpacity`
 export const CarouselImage = styled.Image`    
     width: 100%;
     height: 320px;
-`;
+  
 
+`;
+// border-bottom-left-radius: 90px;
+// margin-bottom: -90px;
 export const SwipeDot = styled.View`
     width: 10px;
     height: 10px;
@@ -352,19 +361,20 @@ export const SwipeDotActive = styled.View`
 `;
 
 export const PageBody = styled.View`
-    background-color: #FFFFFF;
-    border-top-left-radius: 50px;
-    border-top-right-radius: 50px;
-    margin-top:-50px;
+    background-color: #ffffff;
     min-height: 590px;
-`;
 
+`;
+//     border-top-left-radius: 80px;
+// margin-top: -40px;
+
+// border-top-right-radius: -90px;
 // Appointments
 export const ModalItem = styled.View`
     borderWidth: 5px;
     border-style: solid;
-    border-color: #ffffff;
-    background-color: ${primary};
+    border-color: #000000;
+    background-color: ${background};
     border-radius: 10px;
     margin-bottom: 15px;
     padding: 10px;
@@ -385,6 +395,14 @@ export const DateNextArea = styled.TouchableOpacity`
     align-items: flex-start;
 
 `;
+export const Repeat = styled.TouchableOpacity`
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    backgroundColor: white;
+   
+
+`;
 
 export const DateTitleArea = styled.View`
     width: 140px;
@@ -396,7 +414,7 @@ export const DateTitleArea = styled.View`
 export const DateTitle = styled.Text`
     font-size: 17px;
     font-weight: bold;
-    color: #ffffff;
+    color: #000000;
 `;
 
 export const DateList = styled.ScrollView``;
@@ -413,20 +431,28 @@ export const DateItem = styled.TouchableOpacity`
 export const DateItemWeekDay = styled.Text`
     font-size: 16px;
     font-weight: bold;
-    color: #ffffff;
+    color: #000000;
 `;
 
 export const DateItemNumber = styled.Text`
     font-size: 16px;
     font-weight: bold;
-    color: #ffffff;
+    color: #000000;
 
 `;
 
 export const TimeList = styled.ScrollView``;
 
+export const TimeListV = styled.View`
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    
+
+`;
+
 export const TimeItem = styled.TouchableOpacity`
-    width: 75px;
+    width: 70px;
     height: 40px;
     justify-content: center;
     border-radius: 10px;
@@ -438,7 +464,7 @@ export const TimeItem = styled.TouchableOpacity`
 export const TimeItemText = styled.Text`
     font-size: 16px;
     font-weight: bold;
-    color: #ffffff;
+    color: #000000;
 `;
 
 export const AppointmentsList = styled.ScrollView`
@@ -456,13 +482,13 @@ export const AppointmentsItem = styled.TouchableOpacity`
 export const AppointmentsWeekDay = styled.Text`
     font-size: 24px;
     font-weight: bold;
-    color: #ffffff;
+    color: #000000;
 `;
 
 export const AppointmentsTime = styled.Text`
     font-size: 24px;
     font-weight: bold;
-    color: #ffffff;
+    color: #000000;
 
 `;
 
@@ -479,9 +505,21 @@ export const DateAppointmentsItem = styled.TouchableOpacity`
 export const DateAppointmentsDetails = styled.Text`
     font-size: 16px;
     font-weight: bold;
-    color: #ffffff;
+    color: #000000;
 `;
 
+// export const CheckBoxContainer = styled.View`
+//     flex-direction: row;
+//     marginVertical: 30;
+//     align-items: center;
+
+// `;
+
+// export const Checkbox = styled.CheckBox`
+//     width: 30;
+//     height: 30;
+//     margin-right: 20;
+// `;
 
 
 // export const ServiceArea = styled.View`

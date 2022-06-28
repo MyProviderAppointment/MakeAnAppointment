@@ -30,7 +30,8 @@ import {
     TimeList,
     TimeItem,
     TimeItemText,
-    ModalItem
+    ModalItem,
+    TimeListV
 } from '../../components/styles';
 import { baseAPIUrl } from '../../components/shared';
 
@@ -38,7 +39,7 @@ import { baseAPIUrl } from '../../components/shared';
 import { Formik } from 'formik';
 import { NavigationContainer } from '@react-navigation/native';
 
-const { brand, darklight, primary } = Colors;
+const { background, buttontext, text, space, title, holder, button, icon, brand, darklight, primary } = Colors;
 const monthsName = [  
     "January",
     "February",
@@ -46,7 +47,7 @@ const monthsName = [
     "April",
     "May",
     "June",
-    "Jule",
+    "July",
     "August",
     "September",
     "October",
@@ -258,13 +259,14 @@ const Search = () => {
 
     return (
         <StyledContainer>
+
             <PageTitle>Make an Appointment</PageTitle>
             <StyledFormArea>
                 <ModalItem>
                     <DateInfo>
                         {(new Date(selectedYear, selectedMonth-1, 31) > Date.now()) && (
                         <DatePrevArea onPress={handleLeftDateClick}>
-                            <Image style={{ width: 35, height: 35}} source={require('../../assets/Icons/prev.png')}/>
+                            <Image style={{ width: 35, height: 35}} source={require('../../assets/Icons/prev-black.png')}/>
                         </DatePrevArea>
                         )}
                         {(new Date(selectedYear, selectedMonth-1, 31) <= Date.now()) && (
@@ -274,7 +276,7 @@ const Search = () => {
                             <DateTitle>{months[selectedMonth]} {selectedYear}</DateTitle>
                         </DateTitleArea>
                         <DateNextArea  onPress={handleRightDateClick}>
-                           <Image style={{ width: 35, height: 35}} source={require('../../assets/Icons/next.png')}/>
+                           <Image style={{ width: 35, height: 35}} source={require('../../assets/Icons/next-black.png')}/>
                         </DateNextArea>
                     </DateInfo>
                 </ModalItem>
@@ -285,16 +287,16 @@ const Search = () => {
                                 <DateItem 
                                     key={key}
                                     style={{
-                                        opacity: availableListDays.includes(item.value) ? 1 : 0.5,
-                                        backgroundColor: item.number === selectedDay ? '#ffffff' : '#081d4d' 
+                                        opacity: availableListDays.includes(item.value) ? 1 : 0.3,
+                                        backgroundColor: item.number === selectedDay ? '#666b85' : '#ffffff' 
                                     }}
                                     onPress={() => handleGetAppointments(item)} 
                                 >
                                     <DateItemWeekDay style={{
-                                        color: item.number === selectedDay? '#000000' : '#ffffff'
+                                        color: item.number === selectedDay? '#ffffff' : availableListDays.includes(item.value) ? '#3b3a4f' : '#000000'
                                     }}>{item.weekday}</DateItemWeekDay>
                                     <DateItemNumber style={{
-                                        color: item.number === selectedDay? '#000000' : '#ffffff'
+                                        color: item.number === selectedDay? '#ffffff' : availableListDays.includes(item.value) ? '#3b3a4f' : '#000000'
                                     }}>{item.number}</DateItemNumber>
                                 </DateItem>
                             ))}
@@ -302,28 +304,29 @@ const Search = () => {
                     )}
                     {isSubmitting && (
                         <DateList>
-                            <ActivityIndicator size="large" color='#4EADBE'/>
+                            <ActivityIndicator size="large" color='#3b3a4f'/>
                         </DateList> 
                     )} 
                 </ModalItem>
                 <ModalItem>
                     {!isSubmitting && selectedDay > 0 && (
-                        <TimeList horizontal={true} showsHorizontalScrollIndicator={false}>
+                        <TimeListV>
+                         {/* <TimeList horizontal={true} showsHorizontalScrollIndicator={false}> */}
                             {listHours.map((item, key) => (
                                 <TimeItem 
                                     key={key}
                                     onPress={() => setSelectedHour(item.value)}
                                     style={{
-                                        backgroundColor: item.value === selectedHour ? '#ffffff' : '#081d4d' 
+                                        backgroundColor: item.value === selectedHour ? '#666b85' : '#ffffff' 
                                     }}
                                     >
                                         <TimeItemText style={{
-                                            color: item.value === selectedHour? '#000000' : '#ffffff'
+                                            color: item.value === selectedHour? '#ffffff' : '#000000'
                                         }}>{item.value}</TimeItemText>
                                     </TimeItem>
                             ))}
                             
-                        </TimeList>
+                        </TimeListV>
                     )}
                 </ModalItem>
                 {!isSubmittingg && (
@@ -333,11 +336,12 @@ const Search = () => {
                 )}
                 {isSubmittingg && (
                 <StyledButton>
-                        <ActivityIndicator size="large" color='#4EADBE'/>
+                        <ActivityIndicator size="large" color='#3b3a4f'/>
                 </StyledButton>
                 )}
 
-            </StyledFormArea>              
+            </StyledFormArea> 
+             
         </StyledContainer>
     );    
 }
